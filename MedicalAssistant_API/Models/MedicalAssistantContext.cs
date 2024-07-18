@@ -25,6 +25,16 @@ namespace MedicalAssistant_API.Models
             modelBuilder.Entity<Appointment>().HasKey(a => a.AppointmentID);
             modelBuilder.Entity<User>().HasKey(u => u.UserID);
 
+
+            modelBuilder.Entity<Appointment>()
+            .HasOne(a => a.Patient)
+            .WithMany(p => p.Appointments)
+            .HasForeignKey(a => a.PatientID);
+
+            modelBuilder.Entity<Appointment>()
+                .HasOne(a => a.Doctor)
+                .WithMany(d => d.Appointments)
+                .HasForeignKey(a => a.DoctorID);
             // Additional configurations if needed
         }
     }

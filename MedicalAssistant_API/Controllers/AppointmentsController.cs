@@ -20,14 +20,20 @@ namespace MedicalAssistant_API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
         {
-            return await _context.Appointments.ToListAsync();
+            return await _context.Appointments
+                                 .Include(a => a.Patient)   // Include related Patient data
+                                 .Include(a => a.Doctor)    // Include related Doctor data
+                                 .ToListAsync();
         }
 
         // GET: api/Appointments/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Appointment>> GetAppointment(int id)
         {
-            var appointment = await _context.Appointments.FindAsync(id);
+            var appointment = await _context.Appointments
+                                            .Include(a => a.Patient)
+                                            .Include(a => a.Doctor)
+                                            .FirstOrDefaultAsync(a => a.AppointmentID == id);
 
             if (appointment == null)
             {
@@ -76,6 +82,7 @@ namespace MedicalAssistant_API.Controllers
 
             return CreatedAtAction("GetAppointment", new { id = appointment.AppointmentID }, appointment);
         }
+
 
         // DELETE: api/Appointments/5
         [HttpDelete("{id}")]

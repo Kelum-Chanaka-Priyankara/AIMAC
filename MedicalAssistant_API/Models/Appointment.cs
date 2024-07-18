@@ -12,5 +12,7 @@ namespace MedicalAssistant_API.Models
         public string? Purpose { get; set; }
         public string? Notes { get; set; }
 
+        public Patient Patient { get; set; }
+        public User Doctor { get; set; }
     }
 }

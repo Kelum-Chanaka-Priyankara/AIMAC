@@ -13,6 +13,6 @@ namespace MedicalAssistant_API.Models
         public string? Email { get; set; }
         public string? Role { get; set; }
 
-
+        public ICollection<Appointment> Appointments { get; set; }
     }
 }
